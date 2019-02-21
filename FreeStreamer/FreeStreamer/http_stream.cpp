@@ -318,11 +318,13 @@ CFReadStreamRef HTTP_Stream::createReadStream(CFURLRef url)
     CFHTTPMessageSetHeaderFieldValue(request, icyMetaDataHeader, icyMetaDataValue);
     
     if (m_position.start > 0 && m_position.end > m_position.start) {
+        // modify by tianya
+        UInt64 m_position_end = m_position.end - 1;
         CFStringRef rangeHeaderValue = CFStringCreateWithFormat(NULL,
                                                                 NULL,
                                                                 CFSTR("bytes=%llu-%llu"),
                                                                 m_position.start,
-                                                                m_position.end);
+                                                                m_position_end);
         
         CFHTTPMessageSetHeaderFieldValue(request, httpRangeHeader, rangeHeaderValue);
         CFRelease(rangeHeaderValue);
